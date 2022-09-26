@@ -9,22 +9,22 @@ import 'package:http/http.dart' as http;
 enum ProductAction{
   fetch,delete
 }
-class NewsBlock{
+class ProductBlock{
   final _stateStreamController =StreamController<Data>();
   StreamSink<Data?> get productSink=>_stateStreamController.sink;
-  Stream<Data> get newsStream=>_stateStreamController.stream;
+  Stream<Data> get productStream=>_stateStreamController.stream;
 
   final _eventStreamController =StreamController<ProductAction>();
   StreamSink<ProductAction> get eventSink=>_eventStreamController.sink;
   Stream<ProductAction> get _eventStream=>_eventStreamController.stream;
 
-  NewsBlock(){
+  ProductBlock(){
     _eventStream.listen((event)async {
       if(event==ProductAction.fetch){
         try {
-          var news= await getNews();
-          if(news.data !=null){
-            productSink.add(news.data);
+          var product= await getNews();
+          if(product.data !=null){
+            productSink.add(product.data);
           }
           else{
             productSink.addError("wrong output");
